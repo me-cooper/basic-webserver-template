@@ -1,0 +1,6 @@
+<%~ includeFile('partials/header', { it }) %>
+
+<h1>This is a private area</h1>
+<p>Hello <%= it.user.username %></p>
+
+<%~ includeFile('partials/footer', { it }) %>

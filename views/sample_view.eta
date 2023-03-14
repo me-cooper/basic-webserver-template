@@ -1,0 +1,6 @@
+
+<%~ includeFile('partials/header', { it }) %>
+
+Sample View
+
+<%~ includeFile('partials/footer', { it }) %>

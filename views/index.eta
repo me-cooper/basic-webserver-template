@@ -1,0 +1,26 @@
+
+<%~ includeFile('partials/header', { it }) %>
+
+<center>
+
+    <h1 class="colorChange">
+        <% if(it.user){ %>
+            <%= it.user.username %>
+        <% }else{ %>
+            lass mich in ruhe
+        <% } %>
+        
+    </h1>
+
+    <img src="images/me-cooper.png" width="128" height="128" class="shake"/>
+
+    <p><a href="/private"><b>visit super secret site</b></a></p>
+
+    <% if(!it.user){ %>
+        <p><a href="/login">direct login</a></p>
+    <% } %>
+    
+    
+</center>
+
+<%~ includeFile('partials/footer', { it }) %>
