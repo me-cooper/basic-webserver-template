@@ -1,20 +1,20 @@
 # Node.JS - cooper's basic webserver template
 
-This template provides a simple Node.JS webserver with an user auth system. The auth is realized by a JWT. JWT stands for "JSON Web Token", which is a standard format for representing and transmitting data as a JSON object. In the context of authentication, a JWT is a token that is issued by a server to a client after the client has successfully authenticated with the server. 
+This template provides a simple Node.JS webserver with an user authentication system. The auth is realized by a JWT. JWT stands for "JSON Web Token", which is a standard format for representing and transmitting data as a JSON object. In the context of authentication, a JWT is a token that is issued by a server to a client after the client has successfully authenticated with the server. 
 
-There comes no rontend register option with this template but there is an CLI register command to create new users.
+With this template there comes no frontend register option but there is an node script to register and create new users.
 
 ### What can this template do?
 
-This template provides a webserver with easy to hook up server routes, a template engine and default middleware to indicate the user. Theres also a pre configured `public` folder with sample `CSS`, `JS` and `image` files which show how to use it in a template.
-More information about the routes and templates can be found in the `Routes` and `Templates` chapter below.
+This template provides a webserver with easy to hook up server routes, a template engine and default middleware to indicate or auth the user. 
+Theres also a pre configured `public` folder with sample `.css`, `.js` and `image` files that show how to use it in a template.
+More information about the routes and templates can be found in the chapters below.
 
 ---
 
 ## What is this template used for?
 
-I created this template for my local homeserver projects. I often write small utilities that I want to be able to access from anywhere in the world. Well, sometimes it's enough to reach them when I'm just not at home. With this template I can create a simple and fast Webpage with an auth requirement so that not every asshole can access the webapps I'am running on my homeserver.
-
+I created this template for my local homeserver projects. I often write small utilities that I want to be able to access from anywhere in the world. Well, sometimes it's enough to reach them when I'm just not at home. With this template I can create a simple and fast webpage with an auth requirement so that not every asshole can access the webapps I'am running on my homeserver.
 
 
 ## Getting started
@@ -89,7 +89,7 @@ Server is running on port:  3000
 
 There is already a proteted route accessable under `localhost:3000/private` so if you're logged in it will be visitable. Otherwise you will be redirected to `localhost:3000/login` to login with your account. You can use this route as sample as well but there are two extra sample files which demnstrate both a public and a proctected route.
 
-## Add new Routes to your server
+## Add new routes
 
 To add a new route to your webserver you simply have to copy either `sample_public_route.js` or `sample_private_route.js`.
 New route will be registered with the name of the file automatically. If you rename it to `list.js` it will available under `localhost:3000/list`. If you name it `doorlock.js` it will be accessable under `localhost:3000/doorlock` - very easy.
@@ -150,22 +150,55 @@ You can add custom data to the `templateData` object. This object is accessable 
 
 There are two types of middleware functions:
 
-1. middleware.auth.isValid - turn the route into a protected route
-2. middleware.user.get - safes user (if available) in `req.user`
+1. `middleware.auth.isValid` - turn the route into an auth required route
+2. `middleware.user.get` - stores user data in `req.user`
 
-`middleware.user.get` can always be used. If you want to turn a public route into an protected route, just add the middleware:
+`middleware.user.get` can always be used if you need to work with user-specific data inside a template. 
+If you want to turn a public route into an protected route, just add the `middleware.auth.isValid` middleware to the middleware array.
 
 ```javascript
-app.get('/customRoute', [middleware.user.get, middleware.auth.isValid], function (req, res) {
-  res.send('Auth is valid. User is logged in! Otherwise it already has been redirected to login before get to this point');
+app.get('/customRoute', [middleware.auth.isValid, middleware.user.get], function (req, res) {
+
+	console.log(req.user);
+	res.send('For this route a authentication is required!');
+	
 });
 ```
 
-If you want to add own middleware, you can take a look at `./src/middleware`.
+Of course you can add own middleware functions. For that you simply can take a look at `./src/middleware`.
 
 ## Templates
 
-ETA is uses as the template engine. You can access the `templateData` obejct in the template as follows:
+ETA is used as the template engine. You can pass a `templateData` object to your template like this:
+
+```javascript
+route.get('/', [ middleware.user.get ], (req, res, next) => {
+
+    var templateData = {
+      user: req.user
+    };
+
+	templateData.blabla = "Blublub";
+	templateData.entries = [
+		"entry1",
+		"entry2",
+		"entry3"
+	];
+
+    eta.renderFile(path.join(viewsPath, 'sample_view'), templateData)
+    .then(html => {
+      res.status(200).send(html);
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+    
+})
+```
+
+Now you can access the `templateData` object witin the template trough the object `it`.
+
 
 ```text
 <h1 class="colorChange">
@@ -176,10 +209,14 @@ ETA is uses as the template engine. You can access the `templateData` obejct in 
 	<% } %>
 </h1>
 
-<p><%= it.test %></p>
+<p><%= it.blabla %></p>
+
+<% it.entries.forEach(function(entry){ %>
+  <%= entry %>
+<% }) %>
 ```
 
-You can import other templates like showed in the `sample_view`file:
+You can import other templates like showed in the `sample_view` file. If you need to get access to the templateData object in your imported files as well, you need to pass the templateData object with the include function.
 
 ```text
 <%~ includeFile('partials/header', { it }) %>
@@ -189,7 +226,15 @@ Sample View
 <%~ includeFile('partials/footer', { it }) %>
 ```
 
-For more information about the rendering engine visit [https://eta.js.org/](https://eta.js.org/)
+You also can pass a single array or single key to the imported template.
+
+```text
+<%~ includeFile('partials/list', { it.entries }) %>
+```
+
+For more information about the rendering engine visit [https://eta.js.org/](https://eta.js.org/) or open up the [https://eta.js.org/docs/syntax/cheatsheet](ETA-Cheatsheet)
+
+### Public files
 
 To access files located in the `./public` folder, just use as follows:
 
@@ -200,15 +245,20 @@ To access files located in the `./public` folder, just use as follows:
 ```
 
 You can add new folders / files in `./public` as you want and access them the same way.
+Attention! Every file in `./public` can be accessed from the frontend.
 
 ---
 
 
+## Summary
 
-This template is a very easy way to:
+This tmemplate is an comfortable way to setup a secure and modular webserver with Node.JS.
 
-1. Fast deployment of a node.js webserver with basic auth without the need of a database
-2. All needed frontend files are ready to embed and use: `js` `css` and general `assets` folder
-3. Easy to hook up new routes with one single `copy`, `paste` & `rename` procedure 
-4. fast and easy template engine for dynamic displays on frontend
+- Fast deployment of a Node.JS webserver
+- Basic but secure authentication for your projects.
+- Client assets ready to use from public folder
+- Add ne routes to your site with a bare simple `copy`, `paste` & `rename` procedure 
+- Fast and easy to use template engine for dynamic displays on frontend
+
+Overall, it is a simple Node.JS Express web server template where you can use your logic as usual. The syntax is also as usual, except that all the overhead to get started is gone. You can get started right away.
 
