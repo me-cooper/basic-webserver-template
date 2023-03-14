@@ -18,7 +18,7 @@ I created this template for my local homeserver projects. I often write small ut
 ## Getting started
 
 ```
-git clone {REPO.URL}
+git clone https://github.com/me-cooper/node-basic-webserver-template.git
 ```
 
 ```
