@@ -5,6 +5,7 @@ const colors = ["red", "green", "blue", "orange", "purple"];
 
 let i = 0;
 setInterval(function() {
+    if(!text) return;
     // fading effect is done with CSS .colorChange
     const newColor = colors[i];
     i = (i + 1) % colors.length;

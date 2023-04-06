@@ -1,3 +1,5 @@
 module.exports = [
-  // List of user objects
+
+  // Add users here
+  
 ]

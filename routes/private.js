@@ -26,7 +26,7 @@ route.get('/', [ middleware.auth.isValid, middleware.user.get ], (req, res) => {
       user: req.user
     };
 
-    eta.renderFile(path.join(viewsPath, 'private'), templateData)
+    eta.renderFile(path.join(viewsPath, 'sample_view'), templateData)
     .then(html => {
       res.status(200).send(html);
     })

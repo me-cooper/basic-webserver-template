@@ -4,7 +4,7 @@ const path              = require('path');
 /* ################################ SERVER ################################## */
 const express           = require('express');
 const router            = express.Router();
-const middleware        = require('../src/middleware/middleware');
+const middleware        = require('../../src/middleware/middleware');
 
 /* ################################ RENDER ENGINE ########################### */
 const viewsPath         = path.join(__dirname, '..', 'views');

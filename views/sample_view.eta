@@ -1,6 +1,21 @@
 
 <%~ includeFile('partials/header', { it }) %>
 
-Sample View
+<h1>Bare basic sample view. Have fun.</h1>
+
+
+<% if(it.user){ %>
+    <hr />
+    <h4>User is logged in!</h4>
+
+    <p>Hello <%= it.user.username %></p>
+
+    <% if(it.user.additionalData){ %>
+        <p>This is a custom field: <%= it.user.additionalData %></p>    
+    <% } %>
+
+<% } %>
+
+
 
 <%~ includeFile('partials/footer', { it }) %>

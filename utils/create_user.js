@@ -42,7 +42,8 @@ prompt.get(schema, function (err, result) {
         var user = {
             id: users.length + 1,
             username: username,
-            password: res
+            password: res,
+            additionalData: "sample"
         }
         
         console.log(`Please add new user > ${username} < manually to './database/userlist.js'`);

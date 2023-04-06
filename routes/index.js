@@ -26,6 +26,7 @@ route.get('/', [ middleware.user.get ], (req, res, next) => {
       user: req.user
     };
 
+    
     eta.renderFile(path.join(viewsPath, 'index'), templateData)
     .then(html => {
       res.status(200).send(html);

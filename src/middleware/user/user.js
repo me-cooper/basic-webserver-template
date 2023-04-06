@@ -18,8 +18,9 @@ const get = (req, res, next) => {
                 res.clearCookie('user');
                 return next();
             }
-
-            req.user = { username: decodedToken.username };
+            
+            const { password, ...userData } = {...user};
+            req.user = {...userData};
 
         }catch{}
 

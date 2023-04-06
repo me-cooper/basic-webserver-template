@@ -9,16 +9,24 @@ const fs            = require('fs');
 
 
 /* ################################ SERVER ################################## */
-const express       = require('express');
-const app           = express();
-const middleware    = require('./src/middleware/middleware');
-var cookieParser    = require('cookie-parser')
+const express         = require('express');
+const app             = express();
+const middleware      = require('./src/middleware/middleware');
+const cookieParser    = require('cookie-parser');
+const cookieSession   = require('cookie-session');
 
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 const publicPath = path.join(__dirname, 'public');
+app.use(
+  cookieSession({
+    name: "cookieRulesBad",
+    secret: settings.auth.secret,
+    httpOnly: true
+  })
+);
 app.use(express.static(publicPath, {
     redirect: false
 }));
@@ -40,7 +48,9 @@ app.set('view engine', 'eta');
 /* ##### ##### ##### ##### DYNAMIC ADD WEBSERVER ROUTES ##### ##### ##### ##### */
 const routesPath = path.join(__dirname, 'routes');
 fs.readdirSync(routesPath).forEach(routeName => {
+  if(routeName.split('.')[routeName.split('.').length - 1] !== "js") return;
   routeName = routeName.split('.')[0];
+  
   // START IGNORE SAMPLE ROUTES
     if(routeName === "sample_public_route") return;
     if(routeName === "sample_private_route") return;

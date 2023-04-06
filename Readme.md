@@ -36,10 +36,10 @@ module.exports = {
     },
     auth: {
         secret: 'mySuperSecretServerwideTokenHere',
+
         // How long should the login session be valid?
-        // 2 minutes, 5 hours, 12 days, .... || or  type a simple "1000" for 1000ms validity
-        valid:  '10 minutes'
-        
+                                // Minutes    // Hours     // Days
+        valid:  (1000 * 60)  		* 5           * 24         * 1         
     }
 }
 ```
@@ -61,7 +61,8 @@ Please add new user > me-cooper < manually to './database/userlist.js'
 {
   id: 1,
   username: 'me-cooper',
-  password: '$2a$10$iJ8NNBFveS2KnyJCzLxmc.aWxeYW.v5l6Do5nbowM0xBCZrWYbIT.'
+  password: '$2a$10$LCaqsQMGEVEX4PxpJUVF8OhW6lqZ6wQfTW.Gt3MR3MhqBGHtZWjGK',
+  additionalData: 'sample'
 }
 cooper@homeserver$
 ```
@@ -73,10 +74,21 @@ module.exports = [
   {
     id: 1,
     username: 'me-cooper',
-    password: '$2a$10$iJ8NNBFveS2KnyJCzLxmc.aWxeYW.v5l6Do5nbowM0xBCZrWYbIT.'
+    password: '$2a$10$iJ8NNBFveS2KnyJCzLxmc.aWxeYW.v5l6Do5nbowM0xBCZrWYbIT.',
+    additionalData: 'sample'
   }
 ]
 ```
+
+`additionalData` is just a example. You don't need this field. But if you add more fields to the user object, you have access to it in your routes via `req.user.field` - in this case: `req.user.additionalData`. You can use this for simple roles or other things like user-based settings. The fields are attached automatically on login.
+
+```html
+<% if(it.user.additionalData){ %>
+    <p>This is a custom field: <%= it.user.additionalData %></p>    
+<% } %>
+```
+
+
 
 ### Run the server
 
@@ -138,7 +150,9 @@ You can add custom data to the `templateData` object. This object is accessable 
 ```terminal
 { 
 	user: { 
-		username: 'me-cooper' 
+		id: 1, 
+		username: 'me-cooper', 
+		additionalData: 'sample' 
 	}, 
 	test: 'Sample string' 
 }
