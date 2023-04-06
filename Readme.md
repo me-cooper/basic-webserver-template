@@ -103,10 +103,9 @@ There is already a proteted route accessable under `localhost:3000/private` so i
 
 ## Add new routes
 
-To add a new route to your webserver you simply have to copy either `sample_public_route.js` or `sample_private_route.js`.
-New route will be registered with the name of the file automatically. If you rename it to `list.js` it will available under `localhost:3000/list`. If you name it `doorlock.js` it will be accessable under `localhost:3000/doorlock` - very easy.
+To add a new route to your webserver you simply have to copy either `routes/samples/public_route.js` or `routes/samples/private_route.js` rename it and paste it to `routes/*`. New route will be registered with the name of the file automatically. If you rename it to `list.js` it will available under `localhost:3000/list`. If you name it `doorlock.js` it will be accessable under `localhost:3000/doorlock` - very easy.
 
-Following code is from the `sample_public_route.js`:
+Following code is from the `routes/samples/public_route.js`:
 
 ```javascript
 route.get('/', [ middleware.user.get ], (req, res, next) => {
@@ -173,7 +172,11 @@ If you want to turn a public route into an protected route, just add the `middle
 ```javascript
 app.get('/customRoute', [middleware.auth.isValid, middleware.user.get], function (req, res) {
 
-	console.log(req.user);
+  var templateData = {
+      user: req.user
+  };
+  
+	console.log(templateData.user);
 	res.send('For this route a authentication is required!');
 	
 });
@@ -192,12 +195,12 @@ route.get('/', [ middleware.user.get ], (req, res, next) => {
       user: req.user
     };
 
-	templateData.blabla = "Blublub";
-	templateData.entries = [
-		"entry1",
-		"entry2",
-		"entry3"
-	];
+    templateData.blabla = "Blublub";
+    templateData.entries = [
+      "entry1",
+      "entry2",
+      "entry3"
+    ];
 
     eta.renderFile(path.join(viewsPath, 'sample_view'), templateData)
     .then(html => {
