@@ -1,1 +1,63 @@
-<link rel="stylesheet" href="css/main.css" />
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Template</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/bootstrap-5.3.0.min.css" />
+  </head>
+  <body>
+
+    <div class="col-lg-8 mx-auto py-4 py-md-5">
+        <header class="d-flex align-items-center pb-3 border-bottom">
+            <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+              <img src="images/me-cooper.png" height="32" class="me-2"/>
+              <span class="fs-4">cooper.bin</span>
+            </a>
+        </header>
+
+        <nav class="navbar navbar-expand-md bg-body-tertiary">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/private">Private</a>
+                  </li>
+                </ul>
+
+                <ul class="navbar-nav d-flex">
+
+                    <% if(!it.user){ %>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/login">Login</a>
+                        </li>
+                    <% } %>
+
+                    <% if(it.user){ %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <%= it.user.username %>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    <% } %>
+
+                </ul>
+                
+              </div>
+            </div>
+        </nav>
+
+    </div>
+
+    

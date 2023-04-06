@@ -1,1 +1,13 @@
-<script type="text/javascript" src="js/main.js"></script>
+  
+  <div class="col-lg-8 mx-auto mt-5">
+    <footer class="px-5 py-5 text-muted border-top">
+      &copy; &middot; <a href="https://github.com/me-cooper/node-basic-webserver-template">node-basic-webserver-template</a> &middot; General Footer
+    </footer>
+  </div>
+  
+
+
+  <script type="text/javascript" src="js/bootstrap-5.3.0.bundle.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>

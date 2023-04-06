@@ -1,31 +1,3 @@
-*{
-    font-family: Arial, Verdana, Geneva, Tahoma, sans-serif;
-}
-
-h1{
-    font-family: "Arial Black", "Arial Bold", "Arial";
-    font-size: 40px;
-}
-
-
-/* FADING EFFECT BY CSS, COLOR SWITCH BY JS */
-.colorChange{
-    color: red;
-    transition: color 200ms ease;
-}
-
-
-/* JUST SAMPLE LINK DESIGNING */
-a:link, a:active, a:visited{
-    color: blue;
-    text-decoration: none;
-}
-a:hover{
-    text-decoration: underline;
-}
-
-
-
 /* IMAGE HOVER EFFECT */
 @-webkit-keyframes shake {
     0% { -webkit-transform: translate(2px, 1px) rotate(0deg); } 

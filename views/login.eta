@@ -1,21 +1,46 @@
 <%~ includeFile('partials/header', { it }) %>
 
-<center>
-<form action="/login" method="POST">
-    <table>
-        <tr>
-            <td><label for="username"><b>Username</b></label></td>
-            <td><input type="text" placeholder="Username" name="username" required></td>
-        </tr>
-        <tr>
-            <td><label for="password"><b>Password</b></label></td>
-            <td><input type="password" placeholder="Password" name="password" required></td>
-        </tr>
-        <tr>
-            <td colspan="2"><button type="submit" style="width: 100%;">Login</button></td>
-        </tr>
-    </table>
-</form>
-</center>
+<style>
+    .form-signin{
+        text-align: center;
+    }
+    .form-signin .form-floating:focus-within {
+        z-index: 2;
+    }
+      
+    .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+      
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+</style>
+
+
+<div class="col-lg-4 mx-auto">
+
+    <main class="form-signin">
+        <form action="/login" method="POST">
+          <!-- <h1 class="h3 mb-3 fw-normal text-muted">Please login</h1> -->
+          <div class="form-floating">
+            <input type="text" class="form-control" id="username" placeholder="Login" name="username" required>
+            <label for="username">Login</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+            <label for="password">Password</label>
+          </div>
+      
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+        </form>
+    </main>
+
+</div>
+
 
 <%~ includeFile('partials/footer', { it }) %>
