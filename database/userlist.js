@@ -1,6 +1,5 @@
 module.exports = [
 
-  // Add users here
-  
+  // Add users here 
  
 ]

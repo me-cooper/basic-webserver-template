@@ -1,13 +1,14 @@
 # Node.JS - cooper's basic webserver template
 
-This template provides a simple Node.JS webserver with an user authentication system. The auth is realized by a JWT. JWT stands for "JSON Web Token", which is a standard format for representing and transmitting data as a JSON object. In the context of authentication, a JWT is a token that is issued by a server to a client after the client has successfully authenticated with the server. 
+This template provides a simple Node.JS webserver with an user authentication system. The auth is realized by a JWT. JWT stands for "JSON Web Token", which is a standard format for representing and transmitting data as a JSON object. 
 
 With this template there comes no frontend register option but there is an node script to register and create new users.
 
 ### What can this template do?
 
 This template provides a webserver with easy to hook up server routes, a template engine and default middleware to indicate or auth the user. 
-Theres also a pre configured `public` folder with sample `.css`, `.js` and `image` files that show how to use it in a template.
+Theres also a pre configured `public` folder with sample `.css`, `.js` and `image` files that show how to use it in a template. Bootstrap CSS and JS are ready on board to enable quick desiging page.
+
 More information about the routes and templates can be found in the chapters below.
 
 ---
@@ -39,7 +40,7 @@ module.exports = {
 
         // How long should the login session be valid?
                                 // Minutes    // Hours     // Days
-        valid:  (1000 * 60)  		* 5           * 24         * 1         
+        valid:  (1000 * 60)  		* 60           * 24         * 14       
     }
 }
 ```
