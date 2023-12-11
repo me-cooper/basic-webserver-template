@@ -4,7 +4,7 @@ const path              = require('path');
 /* ################################ SERVER ################################## */
 const express           = require('express');
 const router            = express.Router();
-const middleware        = require('../../src/middleware/middleware');
+const middleware        = require('../src/middleware/middleware');
 
 /* ################################ RENDER ENGINE ########################### */
 const viewsPath         = path.join(__dirname, '..', 'views');
@@ -20,8 +20,8 @@ const route             = express(); route.use(router);
 /* ######################################################################## */
 
 
-route.get('/', [ middleware.auth.isValid, middleware.user.get ], (req, res) => {
-  
+route.get('/', [ middleware.user.get ], (req, res, next) => {
+
     var templateData = {
       user: req.user
     };
@@ -36,6 +36,7 @@ route.get('/', [ middleware.auth.isValid, middleware.user.get ], (req, res) => {
     });
     
 })
+
 
 
 module.exports = route;
